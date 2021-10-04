@@ -1,0 +1,220 @@
+/* colors */
+$background-color: #fffcff;
+$text: #3B3333;
+$accent-1: #74AD84;
+$accent-2: #AD8686;
+$accent-3: #756363;
+$light-1: #e3ffeb;
+$light-2: #f7eded;
+$dark-1: #05240d;
+
+/* checkboxes */
+$form-check-label-color: $accent-2;
+$form-check-input-border: none;
+$form-check-input-focus-border: none;
+$form-check-input-bg: $accent-2;
+$form-check-input-checked-color: $accent-1;
+$form-check-input-focus-box-shadow: none;
+
+/* sizes */
+$small: 600px;
+
+body {
+    height: 100%;
+    color: $text;
+    background-color: $background-color;
+    /* background-image: url("bg.jpg"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    font-size: 0.9em;
+    font-family: "Karla", "Arial", "Lucida Sans Unicode", sans-serif;
+    @media screen and (max-width: $small) {
+      background-color: $background-color;;
+    }
+}
+  
+.resize {
+    height: 70%;
+    width: 70%;
+  @media screen and (max-width: $small) {
+      width: 50%;
+      height: 50%;
+    }
+}
+  
+a {
+    color: $text;
+    &:hover {
+        color: $accent-1;
+        text-decoration: none;
+    }
+    &:active {
+        color: $accent-2;
+        text-decoration: none;
+    }
+}
+  
+.center {
+    text-align: center;
+}
+  
+input[type=text] {
+    width: 200px;
+    transition: ease-in-out, width 0.35s ease-in-out;
+    background-color: transparent;
+    color: $text;
+    border: 1px solid $text;
+    &:focus {
+        width: 300px;
+    }
+}
+  
+input[type=submit] {
+    background-color: $light-1;
+    padding: 3px 5.5em;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        background-color: $accent-2;
+    }
+}
+  
+.nav-link {
+    color: $accent-2;
+}
+
+.navbar {
+    font-size: 1.5em;
+    text-align: right;
+    font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: $dark-1;
+    text-align: center;
+    @media screen and (max-width: $small) {
+        font-size: 1em;
+    }
+}
+
+h3 {
+    @extend .navbar;
+}
+  
+.form-control-sm {
+    border: none;
+    background-color: $light-2;
+    width: 70%;
+    text-align: center;
+    color: $accent-3;
+}
+
+.form-select-sm {
+    @extend .form-control-sm;
+}
+  
+.range {
+    width: auto;
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    color: $accent-1;
+    width: 100%; /* Full-width */
+    height: 7px; /* Specified height */
+    background: $accent-1;
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    &:hover {
+        color: $accent-1;
+        opacity: 0.9; /* Fully shown on mouse-over */
+        text-decoration: none;
+    }
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        opacity: 1;
+        width: 20px; /* Set a specific slider handle width */
+        height: 20px; /* Slider handle height */
+        border-radius: 50%;
+        background: $accent-1; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+    &::-moz-range-thumb {
+        width: 20px; /* Set a specific slider handle width */
+        height: 20px; /* Slider handle height */
+        border-radius: 50%;
+        opacity: 1;
+        background: $accent-1; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+}
+
+h1 {
+    font-size: 2.5em;
+    text-align: center;
+    font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $dark-1;
+}
+  
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+.btn {
+    background-color: $accent-2;
+    border: none;
+    width: 15%;
+    &:hover, &:active, &:visited {
+        background-color: $accent-3;
+        border: none;
+    }
+}
+
+.checkbox label:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  
+  .checkbox .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+  }
+  
+.checkbox .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 15%;
+  }
+  
+.checkbox label input[type="checkbox"] {
+    display: none;
+  }
+
+
+  /* sourceMappingURL=styles.css.map */
+  
