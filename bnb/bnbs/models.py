@@ -13,10 +13,10 @@ class Accommodation(models.Model):
         (HOTEL_ROOM, 'HTR'),
         (SHARED_ROOM, 'SHR')
         ]
-
     room_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=128)
     review = models.DecimalField(max_digits=3, decimal_places=2)
+    neighbourhood = models.CharField(max_length=40, default='NULL')
     description = models.TextField()
     latitude = models.FloatField()
     longitude = models.FloatField()
@@ -26,7 +26,7 @@ class Accommodation(models.Model):
         max_length=36,
         choices=ROOM_CHOICES,
     )
-    accomodates = models.IntegerField(default = 0)
+    accommodates = models.IntegerField(default = 0)
     bedrooms = models.IntegerField(default = 0.0)
     beds = models.IntegerField(default = 0)
     number_of_baths = models.DecimalField(max_digits=5, decimal_places=1)
