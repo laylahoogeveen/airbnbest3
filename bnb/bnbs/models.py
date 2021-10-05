@@ -13,29 +13,27 @@ class Accommodation(models.Model):
         (HOTEL_ROOM, 'HTR'),
         (SHARED_ROOM, 'SHR')
         ]
-    room_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=128)
-    review = models.DecimalField(max_digits=3, decimal_places=2)
-    neighbourhood = models.CharField(max_length=40, default='NULL')
-    description = models.TextField()
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    property_long = models.CharField(max_length=36)
-    property = models.CharField(max_length=20)
-    room_type = models.CharField(
-        max_length=36,
-        choices=ROOM_CHOICES,
-    )
-    accommodates = models.IntegerField(default = 0)
-    bedrooms = models.IntegerField(default = 0.0)
-    beds = models.IntegerField(default = 0)
-    number_of_baths = models.DecimalField(max_digits=5, decimal_places=1)
-    bathroom_shared = models.BooleanField(default = True)
-    amenities = models.TextField()
-    price_eu = models.IntegerField(default = 0)
-    price_us = models.IntegerField(default = 0)
-    listing_url = models.URLField(max_length=80)
-    picture_url = models.URLField(max_length=200)
+        
+    room_id = models.IntegerField(default=0, null=True)
+    name = models.CharField(max_length=128, null=True)
+    review = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+    neighbourhood = models.CharField(max_length=40, null=True)
+    description = models.TextField(null=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+    property_long = models.CharField(max_length=36, null=True)
+    property = models.CharField(max_length=20, null=True)
+    room_type = models.CharField(max_length=36, choices=ROOM_CHOICES, null=True)
+    accommodates = models.IntegerField(null=True)
+    bedrooms = models.IntegerField(null=True)
+    beds = models.IntegerField(null=True)
+    number_of_baths = models.DecimalField(max_digits=5, decimal_places=1, null=True)
+    bathroom_shared = models.BooleanField(default = True, null=True)
+    amenities = models.TextField(null=True)
+    price_eu = models.IntegerField(default=0, null=True)
+    price_us = models.IntegerField(default=0, null=True)
+    listing_url = models.URLField(max_length=80, null=True)
+    picture_url = models.URLField(max_length=200, null=True)
 
 # # class Restaurant(models.Model):
 

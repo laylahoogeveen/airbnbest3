@@ -45,8 +45,13 @@ ROOM_TYPE_CHOICES = ['Entire home/apt', 'Hotel room', 'Private room', 'Shared ro
 xlsx_file = Path('data\curated_data', 'airBnB_data_clean.xlsx')
 wb_obj = openpyxl.load_workbook(xlsx_file)
 sheet = wb_obj.active
+
 def run():
+    i = 0
     for row in sheet.iter_rows():
+        i = i + 1
+        if i % 1000 == 0:
+            print (i)
         
         id = row[0].value
         nm = row[1].value
