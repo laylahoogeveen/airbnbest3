@@ -15,6 +15,9 @@ $form-check-input-focus-border: none;
 $form-check-input-bg: $accent-2;
 $form-check-input-checked-color: $accent-1;
 $form-check-input-focus-box-shadow: none;
+$btn-border-radius: 0;
+$btn-border-width: 0;
+
 
 /* sizes */
 $small: 600px;
@@ -23,10 +26,10 @@ body {
     height: 100%;
     color: $text;
     background-color: $background-color;
-    /* background-image: url("bg.jpg"); */
+    background-image: url(../images/bg.png);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: bottom right;
     background-attachment: fixed;
     overflow-x: hidden;
     font-size: 0.9em;
@@ -176,15 +179,22 @@ h1 {
     user-select: none;
   }
   
-.btn {
+.btn{
     background-color: $accent-2;
     border: none;
     width: 15%;
-    &:hover, &:active, &:visited {
+    &:visited {
+        @extend .btn;
+    }
+    &:hover, &:active, &:focus {
         background-color: $accent-3;
-        border: none;
+        background-color: $accent-3;
+        outline:0px !important;
+        -webkit-appearance:none;
+        box-shadow: none !important;
     }
 }
+
 
 .checkbox label:after {
     content: '';
@@ -192,28 +202,6 @@ h1 {
     clear: both;
   }
   
-  .checkbox .cr {
-    position: relative;
-    display: inline-block;
-    border: 1px solid #a9a9a9;
-    border-radius: .25em;
-    width: 1.3em;
-    height: 1.3em;
-    float: left;
-    margin-right: .5em;
-  }
-  
-.checkbox .cr .cr-icon {
-    position: absolute;
-    font-size: .8em;
-    line-height: 0;
-    top: 50%;
-    left: 15%;
-  }
-  
-.checkbox label input[type="checkbox"] {
-    display: none;
-  }
 
 
   /* sourceMappingURL=styles.css.map */
