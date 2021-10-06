@@ -2,17 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Accommodation(models.Model):
-
-    ENTIRE_HOME = 'ENT'
-    PRIVATE_ROOM = 'PRR'
-    HOTEL_ROOM = 'HTR'
-    SHARED_ROOM = 'SHR'
-    ROOM_CHOICES = [
-        (ENTIRE_HOME, 'ENT'),
-        (PRIVATE_ROOM, 'PRR'),
-        (HOTEL_ROOM, 'HTR'),
-        (SHARED_ROOM, 'SHR')
-        ]
         
     room_id = models.IntegerField(default=0, null=True)
     name = models.CharField(max_length=128, null=True)
@@ -23,7 +12,7 @@ class Accommodation(models.Model):
     longitude = models.FloatField(null=True)
     property_long = models.CharField(max_length=36, null=True)
     property = models.CharField(max_length=20, null=True)
-    room_type = models.CharField(max_length=36, choices=ROOM_CHOICES, null=True)
+    room_type = models.CharField(max_length=13, null=True)
     accommodates = models.IntegerField(null=True)
     bedrooms = models.IntegerField(null=True)
     beds = models.IntegerField(null=True)
@@ -34,6 +23,9 @@ class Accommodation(models.Model):
     price_us = models.IntegerField(default=0, null=True)
     listing_url = models.URLField(max_length=80, null=True)
     picture_url = models.URLField(max_length=200, null=True)
+
+    def __str__(self):
+        return str(self.room_id)
 
 # # class Restaurant(models.Model):
 
