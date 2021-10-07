@@ -27,7 +27,20 @@ class Accommodation(models.Model):
     def __str__(self):
         return str(self.room_id)
 
-# # class Restaurant(models.Model):
+class Restaurant(models.Model):
+    name = models.CharField(max_length=50, null=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True) 
+    description = models.TextField(null=True)
+    name_en = models.TextField(null=True)
+    description_en = models.TextField(null=True) 
+    address = models.CharField(max_length=50, null=True)
+    url = models.URLField(max_length=200, null=True)
+    media = models.URLField(max_length=200, null=True)
+    thumbnail = models.URLField(max_length=200, null=True)
+
+    def __str__(self):
+        return str(self.name)
 
 # class Art(models.Model):
 #     MUSEUM = 'MUS'

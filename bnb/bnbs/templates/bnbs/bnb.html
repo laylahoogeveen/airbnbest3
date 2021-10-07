@@ -33,24 +33,12 @@
         </div>
       </div>
       <div class="col-4" style="text-align: center">
-        <div class="form-group">
-        <form name="test" method="GET" action="{% url 'results' %}">
-          {% csrf_token %}
-          room_type: <br>
-          <input class="form-control" type="text" name="room_type">
-          price <br>
-          <input class="form-control" type="text" name="price">
-          accommodates<br>
-          <input class="form-control" type="text" name="accommodates">
-          <button class="btn" type="submit" name="action">Search</button>
-
-          </form> 
-          </div>
-          <!-- </form> -->
-        <!-- {% for each in room_types %}
+        {% for each in room_types %}
+         <!-- ifchanged zodat je niet 16.000 keer Hotel room etc. hebt staan distinct() in Django werkt niet goed helaas -->
+          <!-- {% ifchanged each.room_type %} -->
           {{ each.room_type }}
-
-        {% endfor %} -->
+          <!-- {% endifchanged %} -->
+        {% endfor %}
 
 <!-- 
           <div class="form-check form-check-inline">

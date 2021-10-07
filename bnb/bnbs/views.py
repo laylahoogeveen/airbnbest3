@@ -4,10 +4,43 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User
 # from django.contrib.auth.decorators import login_required
-# from .models import Text, Note
+from .models import Accommodation
 
 # Create your views here.from django.http import HttpResponse
 def index(request):
     """Return index page"""
 
-    return render(request, "bnbs/index.html")
+    context = {
+
+    # Needed for webpage 
+    "room_types": Accommodation.objects.order_by().values('room_type').distinct()
+    }
+
+    return render(request, "bnbs/index.html", context)
+
+def results(request):  #price, accommodates, r_type+ facility, facility_range,
+    if request.method == 'GET':
+        r_type = request.GET.get('room_type')
+        pr = request.GET.get('price')
+        acc = request.GET.get('accommodates')
+
+        accs = Accommodation.objects.filter(room_type=r_type, price_eu=pr, accommodates=acc).order_by().values('room_id', 'price_eu', 'name').distinct()
+
+        context = {
+            "results": accs,
+            }
+
+    return render(request, "bnbs/results.html", context)
+
+
+def bnb(request, r_id):
+    """Return accommodation accessed through dynamic url"""
+
+    accommodation = Accommodation.objects.filter(room_id=r_id).first()
+
+
+    context = {
+            "bnb": accommodation,
+        }
+
+    return render(request, "bnbs/bnb.html", context)
