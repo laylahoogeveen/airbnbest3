@@ -42,15 +42,18 @@ class Restaurant(models.Model):
     def __str__(self):
         return str(self.name)
 
-# class Art(models.Model):
-#     MUSEUM = 'MUS'
-#     GALLERY = 'GAL'
-#     ART_CHOICES = [
-#         (MUSEUM, 'Museum'),
-#         (GALLERY, 'Gallery'),
-#     ]
-#     type = models.CharField(
-#         max_length=2,
-#         choices=ART_CHOICES,
-#         default=MUSEUM, 
-#     )
+class Art(models.Model):
+    trcid = models.CharField(max_length=50, null=True)
+    name = models.CharField(max_length=80, null=True)
+    name_en = models.CharField(max_length=85, null=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True) 
+    description = models.TextField(null=True)
+    description_en = models.TextField(null=True) 
+    address = models.CharField(max_length=50, null=True)
+    url = models.URLField(max_length=200, null=True)
+    media = models.URLField(max_length=200, null=True)
+    thumbnail = models.URLField(max_length=200, null=True)
+
+    def __str__(self):
+        return str(self.name)

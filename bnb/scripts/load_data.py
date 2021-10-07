@@ -1,6 +1,6 @@
 import openpyxl
 from pathlib import Path
-from bnbs.models import Restaurant
+from bnbs.models import Art
 import os
 import sys
 import re
@@ -42,36 +42,70 @@ import re
 
 # ROOM_TYPE_CHOICES = ['Entire home/apt', 'Hotel room', 'Private room', 'Shared room']
 
-xlsx_file = Path('data\curated_data', 'eten_clean.xlsx')
+xlsx_file = Path('data\curated_data', 'art_clean.xlsx')
 wb_obj = openpyxl.load_workbook(xlsx_file)
 sheet = wb_obj.active
 
 
-def run():
-    i = 0
-    for row in sheet.iter_rows():
-        i = i + 1
-        if i % 50 == 0:
-            print (i)
+# Art
+# def run():
+#     i = 0
+#     for row in sheet.iter_rows():
+#         i = i + 1
+#         # if i % 50 == 0:
+#         print (i)
         
-        nm = row[0].value
-        lat = row[1].value
-        long = row[2].value
-        descr = row[3].value
-        nm_en = row[4].value
-        descr_en = row[5].value
-        addr = row[6].value
-        link = row[7].value
-        md = row[8].value
-        if md != None:
-            md = md.partition(',')[0]
-        thmb = row[9].value
+#         trc = row[0].value
+#         lat = row[1].value
+#         long = row[2].value
+#         nm = row[3].value
+#         descr = row[4].value
+#         nm_en = row[5].value
+#         descr_en = row[6].value
+#         addr = row[7].value
+#         link = row[8].value
+#         if link != None:
+#             link = link.partition(' -')[0]
+#         md = row[9].value
+#         if md != None:
+#             md = md.partition(' -')[0]
+#         thmb = row[10].value
 
-        add = Restaurant.objects.create(name = nm, latitude = lat, longitude = long,
-                                        description = descr, name_en = nm_en,
-                                        description_en = descr_en, address = addr,
-                                        url = link, media = md, thumbnail = thmb)
-        add.save()
+        
+#         add = Art.objects.create(trcid = trc, name = nm, name_en = nm_en,
+#                                         latitude = lat, longitude = long,
+#                                         description = descr,
+#                                         description_en = descr_en, address = addr,
+#                                         url = link, media = md, thumbnail = thmb)
+#         add.save()
+
+
+# Restaurants
+# def run():
+#     i = 0
+#     for row in sheet.iter_rows():
+#         i = i + 1
+#         if i % 50 == 0:
+#             print (i)
+        
+#         nm = row[0].value
+#         lat = row[1].value
+#         long = row[2].value
+#         descr = row[3].value
+#         nm_en = row[4].value
+#         descr_en = row[5].value
+#         addr = row[6].value
+#         link = row[7].value
+#         md = row[8].value
+#         if md != None:
+#             md = md.partition(',')[0]
+#         thmb = row[9].value
+
+#         add = Restaurant.objects.create(name = nm, latitude = lat, longitude = long,
+#                                         description = descr, name_en = nm_en,
+#                                         description_en = descr_en, address = addr,
+#                                         url = link, media = md, thumbnail = thmb)
+#         add.save()
 
 # Accommodations
 # def run():
