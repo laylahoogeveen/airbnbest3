@@ -6,94 +6,71 @@
     AirBnBest
 {% endblock %}
 
+{% block header %}
+Find the perfect Airbnb
+  {% endblock %}
+
 {% block body %}
-<div class="row">
-  <div class="col"></div>
-  <div class="col-8">
-    <p><h1>Find the perfect Airbnb</h1></p><p></p><br>
-    <div class="row">
-      <div class="col">
-        <center>Price</center><br>
-      </div>
-      <div class="col-4">
-        <center>Type of place</center>
-      </div>
-      <div class="col">
-        <center>Facilities</center>
-      </div>
-      <div class="col">
-        <center>Neighbourhood</center>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <div class="range" style="text-align: center;">
-          <input type="range" value="60" min="1" max="500" oninput="this.nextElementSibling.value = this.value" class="slider">
-          €<output>75</output>
-        </div>
-      </div>
-      <div class="col-4" style="text-align: center">
-        <div class="form-group">
-        <form name="test" method="GET" action="{% url 'results' %}">
-          {% csrf_token %}
-          room_type: <br>
-          <input class="form-control" type="text" name="room_type">
-          price <br>
-          <input class="form-control" type="text" name="price">
-          accommodates<br>
-          <input class="form-control" type="text" name="accommodates">
-          <button class="btn" type="submit" name="action">Search</button>
-
-          </form> 
-          </div>
-          <!-- </form> -->
-        <!-- {% for each in room_types %}
-          {{ each.room_type }}
-
-        {% endfor %} -->
-
-<!-- 
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="entire_place" value="ENT">
-            <label class="form-check-label" for="inlineCheckbox1">Entire place</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="private_room" value="PRR">
-            <label class="form-check-label" for="inlineCheckbox2">Private room</label>
-          </div>
-          <br>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="hotel_room" value="HTR">
-            <label class="form-check-label" for="inlineCheckbox1">Hotel room</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="shared_room" value="SHR">
-            <label class="form-check-label" for="inlineCheckbox2">Shared room</label>
-          </div> -->
-
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <center>
-            <input type="checkin" class="form-control-sm" id="exampleFormControlInput1" placeholder="dd/mm/yy">
-          </center>
-          </div>
-        </div>
-        <div class="col">
-            <center>
-              <select class="form-select-sm" aria-label="Default select example">
-                <option selected>De Pijp</option>
-                <option value="Centrum">Centrum</option>
-                <option value="Zuid">Zuid</option>
-                <option value="Zuidoost">Zuidoost</option>
-              </select>
-            </center>
-        </div>                            
-  </div>
-  </div>
-  <div class="col"></div>
 
 
-  </div>
+
+<!-- Price -->
+
+<div class="form-group">
+
+    <form name="test" method="GET" action="{% url 'results' %}">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td style="padding: 10px" class="center">Price</th>
+          <td class="center">Type of place</th>
+          <td class="center">Accommodates</th>
+          <td class="center">Near</th>
+        </tr>
+      
+      <tr>  
+      <td>
+          <input type="range" value="60" min="1" max="800" style = "margin-top: 25px" oninput="this.nextElementSibling.value = this.value" class="slider" name="price">
+          €<output>75</output>      
+      </td>
+
+      <td style="padding: 10px" class="center">
+        <input class="form-control" type="text" name="room_type">
+        
+      </td>
+
+    <td style="padding: 10px" class="center">
+      <input class="form-control" type="text" name="accommodates">
+    </td>
+    <td style="padding: 10px" class="center">
+      <input class="form-control" type="text" name="near">
+    </td>
+
+    </tr>
+    <tr>
+      <td colspan="4" class="center"  style="padding: 10px"><button class="btn btn-primary btn-lg" type="submit" name="action" >Search</button></td>
+    </tr>
+    </table>
+    </form> 
+
 </div>
+
+
+
+
+
+        
+
+
+<!-- <div class="row" style="padding: 30px">
+  <div class="col"></div>
+    <button type="button" class="btn btn-primary btn-lg" type="submit" name="action">Search</button>
+  <div class="col"></div>
+</div> -->
+
+
+
+<!-- </div> -->
+
+
 {% endblock %}

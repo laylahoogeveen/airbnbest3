@@ -6,28 +6,29 @@
     AirBnBest
 {% endblock %}
 
-{% block body %}
-<div class="row">
-  <div class="col"></div>
-  <div class="col-8">
-    <p><h1>Results</h1></p><p></p><br>
-    <div class="row">
-      <div class="col">
-          <table>
+
+{% block header %}
+Results
+  {% endblock %}
+
+
+  {% block body %}
                  {% for result in results %}
                  <p>
+                    {% csrf_token %}
                     <b>Room name:</b> {{ result.name }}<br>
-                    <b>Room ID:</b>{{ result.room_id }}<br>
-                    <b>Price:</b> {{ result.price_eu }}<br>
-                 
+                    <b>Price:</b> € {{ result.price_eu }}<br>
+                    
+
                 </p>
                 {% endfor %}
-            </table>
-  </div>
-  </div>
-  <div class="col"></div>
 
 
-  </div>
-</div>
 {% endblock %}
+<!-- 
+<select class="form-select-sm" aria-label="Default select example">
+    <option selected>De Pijp</option>
+    <option value="Centrum">Centrum</option>
+    <option value="Zuid">Zuid</option>
+    <option value="Zuidoost">Zuidoost</option>
+  </select> -->

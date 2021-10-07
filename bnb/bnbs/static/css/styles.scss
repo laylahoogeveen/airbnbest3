@@ -167,22 +167,12 @@ h1 {
     color: $dark-1;
 }
   
-.container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+
   
 .btn{
     background-color: $accent-2;
     border: none;
-    width: 15%;
+    width: 30%;
     &:visited {
         @extend .btn;
     }
@@ -194,6 +184,7 @@ h1 {
         box-shadow: none !important;
     }
 }
+
 
 
 .checkbox label:after {

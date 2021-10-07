@@ -22,9 +22,11 @@ def results(request):  #price, accommodates, r_type+ facility, facility_range,
     if request.method == 'GET':
         r_type = request.GET.get('room_type')
         pr = request.GET.get('price')
-        acc = request.GET.get('accommodates')
+        acc = int(request.GET.get('accommodates'))
+        print (acc)
 
-        accs = Accommodation.objects.filter(room_type=r_type, price_eu=pr, accommodates=acc).order_by().values('room_id', 'price_eu', 'name').distinct()
+        accs = Accommodation.objects.filter(room_type=r_type, price_eu__lte=pr, accommodates__gte=acc).order_by().values(
+            'room_id', 'price_eu', 'name', 'accommodates').distinct()
 
         context = {
             "results": accs,

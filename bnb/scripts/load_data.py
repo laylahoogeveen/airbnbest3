@@ -1,6 +1,6 @@
 import openpyxl
 from pathlib import Path
-from bnbs.models import Art
+# from bnbs.models import ShoppingArea
 import os
 import sys
 import re
@@ -42,11 +42,20 @@ import re
 
 # ROOM_TYPE_CHOICES = ['Entire home/apt', 'Hotel room', 'Private room', 'Shared room']
 
-xlsx_file = Path('data\curated_data', 'art_clean.xlsx')
+xlsx_file = Path('data\curated_data', 'shop_clean.xlsx')
 wb_obj = openpyxl.load_workbook(xlsx_file)
 sheet = wb_obj.active
 
-
+# Shop
+def run():
+    for row in sheet.iter_rows():
+        
+        nm = row[0].value
+        lat = row[1].value
+        long = row[2].value
+        
+        add = ShoppingArea.objects.create(name = nm, latitude = lat, longitude = long)
+        add.save()
 # Art
 # def run():
 #     i = 0

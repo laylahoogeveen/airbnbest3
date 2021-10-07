@@ -57,3 +57,11 @@ class Art(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+class ShoppingArea(models.Model):
+    name = models.CharField(max_length=45, null=True)
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True) 
+
+    def __str__(self):
+        return str(self.name)
