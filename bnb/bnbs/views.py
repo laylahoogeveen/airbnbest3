@@ -13,19 +13,29 @@ def index(request):
     context = {
 
     # Needed for webpage 
-    "room_types": Accommodation.objects.order_by().values('room_type').distinct()
+    "room_types": Accommodation.objects.order_by().values('room_type').distinct(),
+    "num_of_acc": range(17)
     }
 
     return render(request, "bnbs/index.html", context)
 
 def results(request):  #price, accommodates, r_type+ facility, facility_range,
     if request.method == 'GET':
-        r_type = request.GET.get('room_type')
+
+        
+        entire_home = request.GET.get("Entire home/apt")
+        private_room  = request.GET.get("Private room")
+        hotel_room = request.GET.get("Hotel room")
+        shared_room = request.GET.get("Shared room")
+        room_types = [entire_home, private_room, hotel_room, shared_room]
+        room_types = [i for i in room_types if i != None]
+        if room_types == []:
+            room_types = ["Entire home/apt", "Private room", "Hotel room", "Shared room"]
+
         pr = request.GET.get('price')
         acc = int(request.GET.get('accommodates'))
-        print (acc)
 
-        accs = Accommodation.objects.filter(room_type=r_type, price_eu__lte=pr, accommodates__gte=acc).order_by().values(
+        accs = Accommodation.objects.filter(room_type__in=room_types, price_eu__range=(1, pr), accommodates__gte=acc).order_by().values(
             'room_id', 'price_eu', 'name', 'accommodates').distinct()
 
         context = {

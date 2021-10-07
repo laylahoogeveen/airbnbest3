@@ -13,15 +13,26 @@ Results
 
 
   {% block body %}
-                 {% for result in results %}
-                 <p>
-                    {% csrf_token %}
-                    <b>Room name:</b> {{ result.name }}<br>
-                    <b>Price:</b> € {{ result.price_eu }}<br>
-                    
-
-                </p>
-                {% endfor %}
+    <table>
+        {% for result in results %}
+        <td>
+            <b>Room name:</b> {{ result.name }}<br>
+            <b>Price:</b> € {{ result.price_eu }}<br>
+        </td>
+        {% if forloop.counter|divisibleby:3 %}
+            </tr><tr>
+        {% endif %}
+        {% if forloop.counter == results|length %}
+            {% if results|length|divisibleby:3 %}
+                {% elif results|length|divisibleby:2 %}
+                <td></td>
+                {% else%}
+                <td></td><td></td>
+                {% endif %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
 
 
 {% endblock %}
