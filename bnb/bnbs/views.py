@@ -3,18 +3,22 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User
+from itertools import chain
 # from django.contrib.auth.decorators import login_required
-from .models import Accommodation
+from .models import Accommodation, Art, ShoppingArea
 
 # Create your views here.from django.http import HttpResponse
 def index(request):
     """Return index page"""
+    art = Art.objects.all()
+    shop = ShoppingArea.objects.all()
 
     context = {
 
     # Needed for webpage 
     "room_types": Accommodation.objects.order_by().values('room_type').distinct(),
-    "num_of_acc": range(17)
+    "num_of_acc": range(17),
+    "facilities": list(chain(art, shop))
     }
 
     return render(request, "bnbs/index.html", context)
@@ -36,7 +40,7 @@ def results(request):  #price, accommodates, r_type+ facility, facility_range,
         acc = int(request.GET.get('accommodates'))
 
         accs = Accommodation.objects.filter(room_type__in=room_types, price_eu__range=(1, pr), accommodates__gte=acc).order_by().values(
-            'room_id', 'price_eu', 'name', 'accommodates').distinct()
+            'room_id', 'price_eu', 'name', 'accommodates', 'picture_url').distinct()
 
         context = {
             "results": accs,

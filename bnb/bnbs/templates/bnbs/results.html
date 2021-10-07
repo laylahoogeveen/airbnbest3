@@ -14,9 +14,17 @@ Results
 
   {% block body %}
     <table>
+        <tr>
         {% for result in results %}
-        <td>
-            <b>Room name:</b> {{ result.name }}<br>
+        <td class="cell">
+            <p>
+            <img src={{result.picture_url}} class="result_img">
+            </p>
+            <Center>
+            <span class="descr">
+            <b>{{ result.name }}</b><br>
+            </span>
+        </Center>
             <b>Price:</b> € {{ result.price_eu }}<br>
         </td>
         {% if forloop.counter|divisibleby:3 %}
@@ -24,11 +32,11 @@ Results
         {% endif %}
         {% if forloop.counter == results|length %}
             {% if results|length|divisibleby:3 %}
-                {% elif results|length|divisibleby:2 %}
-                <td></td>
-                {% else%}
-                <td></td><td></td>
-                {% endif %}
+            {% elif results|length|divisibleby:2 %}
+            <td></td>
+            {% else%}
+            <td></td><td></td>
+            {% endif %}
             </tr>
         {% endif %}
     {% endfor %}

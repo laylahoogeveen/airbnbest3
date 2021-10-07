@@ -1,6 +1,6 @@
 import openpyxl
 from pathlib import Path
-# from bnbs.models import ShoppingArea
+from bnbs.models import ShoppingArea
 import os
 import sys
 import re

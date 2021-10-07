@@ -21,19 +21,19 @@ Find the perfect Airbnb
       {% csrf_token %}
       <table width="100%">
         <tr>
-          <td style="padding: 10px" class="center">Price</th>
-          <td class="center">Type of place</th>
-          <td class="center">Accommodates</th>
-          <td class="center">Near</th>
+          <td style="padding: 10px" class="center" width="25%">Price</th>
+          <td class="center" width="25%">Type of place</th>
+          <td class="center" width="25%">Accommodates</th>
+          <td class="center" width="25%">Near</th>
         </tr>
       
       <tr>  
-      <td class="center" style="padding: 10px">
+      <td class="center" style="padding: 10px" width="25%">
           <input type="range" value="75" min="1" max="800" style = "margin-top: 25px" oninput="this.nextElementSibling.value = this.value" class="slider" name="price">
           €<output>75</output>     
       </td>
 
-      <td style="padding: 10px" class="center">
+      <td style="padding: 10px" class="center" width="25%">
         <div class="d-grid gap-2 d-md-block" role="group" aria-label="Basic checkbox toggle button group">
           <div class="checks_group">
           <input type="checkbox" class="btn-check" name="Entire home/apt" id="Entire home/apt" autocomplete="off" value="Entire home/apt">
@@ -55,7 +55,7 @@ Find the perfect Airbnb
         
       </td>
 
-    <td style="padding: 10px" class="center">
+    <td style="padding: 10px" class="center" width="25%">
       <select class="form-select" aria-label=".form-select example" name="accommodates">
         <option selected value="1">Number of guests</option>
         {% for i in num_of_acc %}
@@ -63,13 +63,18 @@ Find the perfect Airbnb
         {% endfor %}
       </select>
     </td>
-    <td style="padding: 10px" class="center">
-      <input class="form-control" type="text" name="near">
+    <td style="padding: 10px" class="center" width="25%">
+      <select class="form-select" aria-label=".form-select example" name="near" style="max-width: 200px">
+        <option selected value="1">Facility</option>
+        {% for each in facilities %}
+        <option value="{{ i }}" style="text-align:left">{{ each }}</option>
+        {% endfor %}
+      </select>
     </td>
 
     </tr>
     <tr>
-      <td colspan="5" class="center"  style="padding: 10px"><button class="btn btn-primary btn-lg" type="submit" name="action" >Search</button></td>
+      <td colspan="5" class="center"  style="padding: 25px"><button class="btn btn-primary btn-lg" type="submit" name="action" >Search</button></td>
     </tr>
     </table>
     </form> 

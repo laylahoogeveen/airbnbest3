@@ -41,13 +41,17 @@
     </div>
   </div>
   <div class="row">
-    <div class="col"></div>
-    <div class="col">
+    <div class="col-sm-2">
+      {% block more_filters %}
+    
+      {% endblock %}
+    </div>
+    <div class="col-xl-8">
     {% block body %}
     
     {% endblock %}
     </div>
-    <div class="col"></div>
+    <div class="col-sm-2"></div>
   </div>
 
 </div>
