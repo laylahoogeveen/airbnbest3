@@ -4,6 +4,10 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User
 from itertools import chain
+import numpy as np
+import pandas as pd
+import openpyxl
+from haversine import haversine as hs
 # from django.contrib.auth.decorators import login_required
 from .models import Accommodation, Art, ShoppingArea
 
@@ -18,12 +22,14 @@ def index(request):
     # Needed for webpage 
     "room_types": Accommodation.objects.order_by().values('room_type').distinct(),
     "num_of_acc": range(17),
-    "facilities": list(chain(art, shop))
+    "facilities": list(chain(art, shop)),
+    "art": art,
+    "shop": shop,
     }
 
     return render(request, "bnbs/index.html", context)
 
-def results(request):  #price, accommodates, r_type+ facility, facility_range,
+def results(request):  # + facility, facility_range,
     if request.method == 'GET':
 
         
@@ -31,6 +37,7 @@ def results(request):  #price, accommodates, r_type+ facility, facility_range,
         private_room  = request.GET.get("Private room")
         hotel_room = request.GET.get("Hotel room")
         shared_room = request.GET.get("Shared room")
+        facility = request.GET.get("facility")
         room_types = [entire_home, private_room, hotel_room, shared_room]
         room_types = [i for i in room_types if i != None]
         if room_types == []:
@@ -38,8 +45,28 @@ def results(request):  #price, accommodates, r_type+ facility, facility_range,
 
         pr = request.GET.get('price')
         acc = int(request.GET.get('accommodates'))
-
+        facility = request.GET.get('facility')
         accs = Accommodation.objects.filter(room_type__in=room_types, price_eu__range=(1, pr), accommodates__gte=acc).order_by().values(
+            'room_id', 'price_eu', 'name', 'accommodates', 'picture_url').distinct()
+        
+
+        if facility is not None:
+            if 'MUSEUM' in facility:
+                facility = facility.strip(" MUSEUM")
+                facility = Art.objects.get(pk=facility)
+            else:
+                facility = facility.strip(" SHOP")
+                facility = ShoppingArea.objects.get(pk=facility)
+            
+            max_distance = 3
+            bnbs = bnb_near_facility(facility, max_distance)
+
+            accs = Accommodation.objects.filter(room_type__in=room_types, price_eu__range=(1, pr), accommodates__gte=acc, pk__in=bnbs).order_by().values(
+            'room_id', 'price_eu', 'name', 'accommodates', 'picture_url').distinct()
+            print (len(accs))
+            print ('\n')
+        else: 
+            accs = Accommodation.objects.filter(room_type__in=room_types, price_eu__range=(1, pr), accommodates__gte=acc).order_by().values(
             'room_id', 'price_eu', 'name', 'accommodates', 'picture_url').distinct()
 
         context = {
@@ -48,8 +75,27 @@ def results(request):  #price, accommodates, r_type+ facility, facility_range,
 
     return render(request, "bnbs/results.html", context)
 
+def bnb_near_facility(facility, max_distance):
 
-def bnb(request, r_id):
+    fac_coor = (facility.latitude, facility.longitude)
+    bnbs = Accommodation.objects.all()
+    results = []
+
+    for bnb in bnbs:
+        bnb_coor = (bnb.latitude, bnb.longitude)
+        if bnb.latitude != None: 
+            distance = hs(fac_coor, bnb_coor)
+            if distance <= max_distance:
+                results.append(bnb.pk)
+
+    # queryset = Accommodation.objects.filter(pk__in=results).all()
+    # print (queryset)
+
+    return results
+
+
+
+def accommodation(request, r_id):
     """Return accommodation accessed through dynamic url"""
 
     accommodation = Accommodation.objects.filter(room_id=r_id).first()

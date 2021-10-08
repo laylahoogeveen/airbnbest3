@@ -17,13 +17,14 @@ Results
         <tr>
         {% for result in results %}
         <td class="cell">
-            <p>
-            <img src={{result.picture_url}} class="result_img">
+            <p><a href='/bnb/{{ result.room_id }}'>
+            <img src={{ result.picture_url }} class="result_img">
             </p>
             <Center>
             <span class="descr">
             <b>{{ result.name }}</b><br>
             </span>
+        </a>
         </Center>
             <b>Price:</b> € {{ result.price_eu }}<br>
         </td>

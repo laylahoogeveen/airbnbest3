@@ -12,8 +12,7 @@ Find the perfect Airbnb
 
 {% block body %}
 
-
-
+{% load static %}
 
 <div class="form-group">
 
@@ -21,16 +20,18 @@ Find the perfect Airbnb
       {% csrf_token %}
       <table width="100%">
         <tr>
-          <td style="padding: 10px" class="center" width="25%">Price</th>
+          <td style="padding: 10px" class="center" width="25%">Nightly price</th>
           <td class="center" width="25%">Type of place</th>
           <td class="center" width="25%">Accommodates</th>
           <td class="center" width="25%">Near</th>
         </tr>
       
       <tr>  
-      <td class="center" style="padding: 10px" width="25%">
-          <input type="range" value="75" min="1" max="800" style = "margin-top: 25px" oninput="this.nextElementSibling.value = this.value" class="slider" name="price">
-          €<output>75</output>     
+      <td class="center" style="padding: 10px;" max-width="25%">
+          <input type="range" value="75" min="1" max="800" style = "margin-top: 25px" oninput="this.nextElementSibling.value = this.value" class="slider" name="price" id="lower">
+          €0 - €<output>75</output>     
+          <!-- <input type="range" min="1" max="800" value="100" class="slider2" id="higher" oninput="this.nextElementSibling.value = this.value, shareInput()"> -->
+          <!-- €<output>75</output>    -->
       </td>
 
       <td style="padding: 10px" class="center" width="25%">
@@ -39,14 +40,14 @@ Find the perfect Airbnb
           <input type="checkbox" class="btn-check" name="Entire home/apt" id="Entire home/apt" autocomplete="off" value="Entire home/apt">
           <label class="btn btn-outline-secondary btn-sm" for="Entire home/apt" >Entire home/apt</label>
         
-          <input type="checkbox" class="btn-check" name="Hotel room" id="Hotel room" autocomplete="off">
+          <input type="checkbox" class="btn-check" name="Hotel room" id="Hotel room" autocomplete="off" value="Hotel room">
           <label class="btn btn-outline-secondary btn-sm" for="Hotel room">Hotel room</label>
         </div>
           <div class="checks_group">
-          <input type="checkbox" class="btn-check" name="Private room" id="Private room" autocomplete="off">
+          <input type="checkbox" class="btn-check" name="Private room" id="Private room" autocomplete="off" value="Private room">
           <label class="btn btn-outline-secondary btn-sm" for="Private room">Private room</label>
 
-          <input type="checkbox" class="btn-check" name="Shared room" id="Shared room" autocomplete="off">
+          <input type="checkbox" class="btn-check" name="Shared room" id="Shared room" autocomplete="off" value="Shared room">
           <label class="btn btn-outline-secondary btn-sm" for="Shared room">Shared room</label>
         </div>
         </div>
@@ -64,11 +65,19 @@ Find the perfect Airbnb
       </select>
     </td>
     <td style="padding: 10px" class="center" width="25%">
-      <select class="form-select" aria-label=".form-select example" name="near" style="max-width: 200px">
+      <select class="form-select" aria-label=".form-select example" name="facility" style="max-width: 200px">
         <option selected value="1">Facility</option>
-        {% for each in facilities %}
-        <option value="{{ i }}" style="text-align:left">{{ each }}</option>
+        <option value="Museums and galleries" disabled><>Museums and galleries</b></option>
+        {% for each in art %}
+        <option value="{{ each.pk }} MUSEUM" style="text-align:left">{{ each.name }}</option>
         {% endfor %}
+        <option value="Shopping areas" disabled><b>Shopping areas</b></option>
+        {% for each in shop %}
+        <option value="{{ each.pk }} SHOP" style="text-align:left">{{ each.name }}</option>
+        {% endfor %}
+        <!-- {% for each in facilities %}
+        <option value="{{ each }}" style="text-align:left">{{ each.name }}</option>
+        {% endfor %} -->
       </select>
     </td>
 
