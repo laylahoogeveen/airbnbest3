@@ -21,7 +21,7 @@ def index(request):
 
     # Needed for webpage 
     "room_types": Accommodation.objects.order_by().values('room_type').distinct(),
-    "num_of_acc": range(17),
+    "num_of_acc": range(1, 17),
     "facilities": list(chain(art, shop)),
     "art": art,
     "shop": shop,
@@ -31,7 +31,6 @@ def index(request):
 
 def results(request):  # + facility, facility_range,
     if request.method == 'GET':
-
         
         entire_home = request.GET.get("Entire home/apt")
         private_room  = request.GET.get("Private room")
@@ -39,6 +38,8 @@ def results(request):  # + facility, facility_range,
         shared_room = request.GET.get("Shared room")
         facility = request.GET.get("facility")
         room_types = [entire_home, private_room, hotel_room, shared_room]
+
+        # Select all room types if user hasn't selected preference 
         room_types = [i for i in room_types if i != None]
         if room_types == []:
             room_types = ["Entire home/apt", "Private room", "Hotel room", "Shared room"]
@@ -49,7 +50,7 @@ def results(request):  # + facility, facility_range,
         accs = Accommodation.objects.filter(room_type__in=room_types, price_eu__range=(1, pr), accommodates__gte=acc).order_by().values(
             'room_id', 'price_eu', 'name', 'accommodates', 'picture_url').distinct()
         
-
+        # If facility is selected, find out which of the two kinds
         if facility is not None:
             if 'MUSEUM' in facility:
                 facility = facility.strip(" MUSEUM")
@@ -77,21 +78,24 @@ def results(request):  # + facility, facility_range,
 
 def bnb_near_facility(facility, max_distance):
 
-    fac_coor = (facility.latitude, facility.longitude)
     bnbs = Accommodation.objects.all()
     results = []
 
     for bnb in bnbs:
-        bnb_coor = (bnb.latitude, bnb.longitude)
-        if bnb.latitude != None: 
-            distance = hs(fac_coor, bnb_coor)
-            if distance <= max_distance:
+        if bnb.latitude != None:
+            if calculate_distance(bnb, facility) <= max_distance:
                 results.append(bnb.pk)
 
-    # queryset = Accommodation.objects.filter(pk__in=results).all()
-    # print (queryset)
-
     return results
+
+
+def calculate_distance(bnb, facility):
+
+    fac_coor = (facility.latitude, facility.longitude)
+    bnb_coor = (bnb.latitude, bnb.longitude)
+     
+    return hs(fac_coor, bnb_coor)
+
 
 
 

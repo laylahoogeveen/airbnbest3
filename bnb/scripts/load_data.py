@@ -1,9 +1,50 @@
-import openpyxl
-from pathlib import Path
-from bnbs.models import ShoppingArea
-import os
-import sys
+# import openpyxl
+import requests
+# from pathlib import Path
+import time
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from bnbs.models import Accommodation
+# import os
+# import sys
 import re
+
+def run():
+    accs = Accommodation.objects.all()
+    # listje = []
+    total = 0
+    i = 0
+    
+    for a in accs:
+        total = total + 1
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        URL = a.listing_url
+        if check_url(URL, driver) == True:
+            i=i+1
+            print (i, "van de", total)
+            a.delete()
+            # listje.append(a.pk)
+
+    driver.close()
+    # print (len(listje))
+    # print (listje)
+
+def check_url(url, driver):
+    page = requests.get(url)
+    driver.get(url)
+    time.sleep(5)
+    res=driver.page_source
+    # driver.quit()
+    soup = BeautifulSoup(res, "html.parser")
+
+    soup = str(soup)
+    if "Permission denied by Himeji" in soup:
+        return True
+    
+    return False
+
+
 
 # PROPERTY_TYPE_CHOICES = ['Barn', 'Boat', 'Bus', 'Camper/RV', 'Campsite',
 #                         'Cave', 'Earth house', 'Entire bed and breakfast', 'Entire bungalow',
@@ -42,20 +83,20 @@ import re
 
 # ROOM_TYPE_CHOICES = ['Entire home/apt', 'Hotel room', 'Private room', 'Shared room']
 
-xlsx_file = Path('data\curated_data', 'shop_clean.xlsx')
-wb_obj = openpyxl.load_workbook(xlsx_file)
-sheet = wb_obj.active
+# xlsx_file = Path('data\curated_data', 'shop_clean.xlsx')
+# wb_obj = openpyxl.load_workbook(xlsx_file)
+# sheet = wb_obj.active
 
 # Shop
-def run():
-    for row in sheet.iter_rows():
+# def run():
+#     for row in sheet.iter_rows():
         
-        nm = row[0].value
-        lat = row[1].value
-        long = row[2].value
+#         nm = row[0].value
+#         lat = row[1].value
+#         long = row[2].value
         
-        add = ShoppingArea.objects.create(name = nm, latitude = lat, longitude = long)
-        add.save()
+#         add = ShoppingArea.objects.create(name = nm, latitude = lat, longitude = long)
+#         add.save()
 # Art
 # def run():
 #     i = 0
