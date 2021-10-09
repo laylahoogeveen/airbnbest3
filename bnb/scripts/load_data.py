@@ -5,28 +5,41 @@ import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from bnbs.models import Accommodation
 # import os
 # import sys
 import re
 
 def run():
-    accs = Accommodation.objects.all()
+    accs = Accommodation.objects.filter(pk__gt=404).all()
     # listje = []
     total = 0
     i = 0
+    options = Options()
+    options.headless = True
+    driver = webdriver.Chrome(executable_path=r'C:/Users/Layla/.wdm/drivers/chromedriver/win32/94.0.4606.61/chromedriver.exe', options=options)
     
     for a in accs:
         total = total + 1
-        driver = webdriver.Chrome(ChromeDriverManager().install())
+        
         URL = a.listing_url
         if check_url(URL, driver) == True:
             i=i+1
             print (i, "van de", total)
             a.delete()
             # listje.append(a.pk)
-
-    driver.close()
+        if i > 1000:
+            break
+        
+    print ('\n')
+    print ('\n')
+    print ('\n')
+    print ("Final")
+    print ('\n')
+    print (i, "van de", total, "verwijderd")
+    driver.quit()
+    
     # print (len(listje))
     # print (listje)
 
@@ -39,6 +52,7 @@ def check_url(url, driver):
     soup = BeautifulSoup(res, "html.parser")
 
     soup = str(soup)
+    # driver.close()
     if "Permission denied by Himeji" in soup:
         return True
     
