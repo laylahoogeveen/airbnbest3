@@ -234,6 +234,37 @@ h1 {
   color: #05240d;
 }
 
+h2 {
+  font-size: 1 em;
+  font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #05240d;
+}
+
+td.result_title {
+  font-weight: bold;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.result_properties {
+  margin-top: 0.2em;
+  padding-top: 0.2em;
+  margin-bottom: 0.2em;
+  padding-bottom: 0.2em;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.result_properties .form-control-sm {
+  width: 35%;
+}
+
 .btn, .btn:visited {
   background-color: #AD8686;
   border: none;

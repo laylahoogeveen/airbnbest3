@@ -1,6 +1,8 @@
-<!-- Layla Hoogeveen, Web App Studio -->
+<!-- Layla Hoogeveen,
+    Information Organization, October 2021 -->
 
 {% extends "layout.html" %}
+{% load mathfilters %}
 
 {% block title %}
     AirBnBest
@@ -8,8 +10,142 @@
 
 
 {% block header %}
-Results
+{{ num_results }} results
   {% endblock %}
+{% block more_filters %}
+    <div class="form-group">
+
+    <form name="test" method="GET" action="{% url 'more_filters' %}">
+      {% csrf_token %}
+    <table style="table-layout: auto;">
+        <tr>
+            <td>
+                <h2>Filters</h2>
+            </td>
+        </tr>
+        <!-- Filters selected on homepage -->
+        <tr>
+            <td class="result_title">
+                Price
+            </td>
+            <td class="result_properties">
+                <input class="form-control form-control-sm" type="number" name="price" value="{{ price }}" placeholder="{{ price }}" >
+            </td>
+        </tr>
+        <tr>
+            <td class="result_title">
+                Type of place
+            </td>
+            <td class="result_properties">
+                <div class="d-grid gap-2 d-md-block" role="group" aria-label="Basic checkbox toggle button group">
+                    <div class="checks_group">
+                        {% if 'Entire home/apt' in room_types %}
+                            <input type="checkbox" class="btn-check" name="Entire home/apt" id="Entire home/apt" autocomplete="off" value="Entire home/apt" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="Entire home/apt" style="font-size: 0.85em">Entire home/apt</label>
+                        {% else %}
+                            <input type="checkbox" class="btn-check" name="Entire home/apt" id="Entire home/apt" autocomplete="off" value="Entire home/apt">
+                            <label class="btn btn-outline-secondary btn-sm" for="Entire home/apt" style="font-size: 0.85em">Entire home/apt</label>                       
+                        {% endif %}
+
+                        {% if 'Hotel room' in room_types %}
+                            <input type="checkbox" class="btn-check" name="Hotel room" id="Hotel room" autocomplete="off" value="Hotel room" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="Hotel room" style="font-size: 0.85em">Hotel room</label>
+                        {% else %}
+                            <input type="checkbox" class="btn-check" name="Hotel room" id="Hotel room" autocomplete="off" value="Hotel room">
+                            <label class="btn btn-outline-secondary btn-sm" for="Hotel room" style="font-size: 0.85em">Hotel room</label>     
+                        {% endif %}              
+                    </div>
+                    
+                    <div class="checks_group">
+                        {% if 'Private room' in room_types %}
+                            <input type="checkbox" class="btn-check" name="Private room" id="Private room" autocomplete="off" value="Private room" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="Private room" style="font-size: 0.85em">Private room</label>
+                        {% else %}
+                            <input type="checkbox" class="btn-check" name="Private room" id="Private room" autocomplete="off" value="Private room">
+                            <label class="btn btn-outline-secondary btn-sm" for="Private room" style="font-size: 0.85em">Private room</label>
+                        {% endif %}
+
+                        {% if 'Shared room' in room_types %}         
+                            <input type="checkbox" class="btn-check" name="Shared room" id="Shared room" autocomplete="off" value="Shared room" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="Shared room" style="font-size: 0.85em">Shared room</label>
+                        {% else %}
+                            <input type="checkbox" class="btn-check" name="Shared room" id="Shared room" autocomplete="off" value="Shared room">
+                            <label class="btn btn-outline-secondary btn-sm" for="Shared room" style="font-size: 0.85em">Shared room</label>
+                        {% endif %}                       
+                    </div>
+                  </div>
+          
+            </td>
+        </tr>
+        <tr>
+            <td class="result_title">
+                Accommodates
+            </td>
+            <td class="result_properties">
+                <input class="form-control form-control-sm" type="number" name="accommodates" value="{{ accommodates }}" placeholder="{{ accommodates }}">
+            </td>
+        </tr>
+        <tr>
+            <td class="result_title">
+                With
+            </td>
+            <td class="result_properties">
+                <select class="form-select" aria-label=".form-select example" name="facility" style="max-width: 200px">
+                    {% if facility != "None" %}
+                    <option selected value="{{ facility.pk }} {{ facility_type }}">{{ facility }}</option>
+                    {% else %}
+                    <option selected value="None">Facility</option>
+                    {% endif %}
+                    <option value="Museums and galleries" disabled>Museums and galleries</b></option>
+                    {% for each in art %}
+                    <option value="{{ each.pk }} MUSEUM" style="text-align:left">{{ each.name }}</option>
+                    {% endfor %}
+                    <option value="Shopping areas" disabled><b>Shopping areas</b></option>
+                    {% for each in shop %}
+                    <option value="{{ each.pk }} SHOP" style="text-align:left">{{ each.name }}</option>
+                    {% endfor %}
+            
+                  </select>
+
+            </td>
+        </tr> 
+        <tr>
+            <td class="result_title">
+                within
+            </td>
+            <td class="result_properties">
+                <input class="form-control form-control-sm" type="number" name="max_distance" step="100" value="{{ fac_distance }}" placeholder="{{ fac_distance }}">
+                meters
+            </td>
+
+        </tr> 
+
+        <!-- New filters -->
+        <tr>
+            <td class="result_title">
+                Neighbourhood:
+            </td>
+            <td class="result_properties">
+                <select class="form-select" aria-label=".form-select example" name="neighbourhood" style="max-width: 200px">
+                    {% if neighbourhood != "None" %}
+                        <option selected value="{{ neighbourhood }}">{{ neighbourhood }}</option>
+                    {% else %}
+                        <option selected value="None">Neighbourhood</option>
+                    {% endif %}
+                    {% for each in neighbourhoods %}
+                        <option value="{{ each.neighbourhood }}" style="text-align:left">{{ each.neighbourhood }}</option>
+                    {% endfor %}
+                  </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" rowspan="2" style="padding: 1.5em" class="center"><button class="btn btn-primary btn" type="submit" name="action" style="width:80%">Search</button></td>
+        </tr>
+    </form> 
+    </table>
+    </div>
+{% endblock %}
 
 
   {% block body %}
@@ -45,10 +181,3 @@ Results
 
 
 {% endblock %}
-<!-- 
-<select class="form-select-sm" aria-label="Default select example">
-    <option selected>De Pijp</option>
-    <option value="Centrum">Centrum</option>
-    <option value="Zuid">Zuid</option>
-    <option value="Zuidoost">Zuidoost</option>
-  </select> -->

@@ -130,7 +130,6 @@ h3 {
     -webkit-appearance:none;
     box-shadow: none !important;
   }
-  
 }
 
 .range {
@@ -222,8 +221,36 @@ h1 {
     letter-spacing: 0.05em;
     color: $dark-1;
 }
-  
 
+h2 {
+    font-size: 1 em;
+    font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $dark-1;
+}
+td.result_title {
+    font-weight: bold;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
+.result_properties {
+    margin-top: 0.2em;
+    padding-top: 0.2em;
+    margin-bottom: 0.2em;
+    padding-bottom: 0.2em;
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
+.result_properties .form-control-sm {
+    width: 35%;
+}
   
 .btn {
     background-color: $accent-2;
@@ -239,6 +266,7 @@ h1 {
         box-shadow: none !important;
     }
 }
+
 .btn-lg {
   width: 30%;
 }
@@ -254,19 +282,16 @@ h1 {
   &:hover, &:active, &:focus, &:checked {
       background-color: $accent-3;
       background-color: $accent-3;
-
   }
-
 }
 
 .checks_group {
     margin: 3px;
 }
 
-
 table {
-  table-layout: fixed ;
-  width: 100% ;
+  table-layout: fixed;
+  width: 100%;
 }
 
 .cell {
@@ -281,7 +306,6 @@ table {
   display: inline-block;
   border-radius: 8px;
 }
-
 
 .descr { 
   text-decoration: none; 

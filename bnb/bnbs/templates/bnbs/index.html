@@ -1,4 +1,5 @@
-<!-- Layla Hoogeveen, Web App Studio -->
+<!-- Layla Hoogeveen,
+    Information Organization, October 2021 -->
 
 {% extends "layout_index.html" %}
 
@@ -27,14 +28,14 @@ Find the perfect Airbnb
         </tr>
       
       <tr>  
-      <td class="center" style="padding: 10px;" max-width="25%">
+      <td class="center" style="padding: 10px; padding-bottom: 0px;" max-width="25%">
           <input type="range" value="75" min="1" max="800" style = "margin-top: 25px" oninput="this.nextElementSibling.value = this.value" class="slider" name="price" id="lower">
           €0 - €<output>75</output>     
           <!-- <input type="range" min="1" max="800" value="100" class="slider2" id="higher" oninput="this.nextElementSibling.value = this.value, shareInput()"> -->
           <!-- €<output>75</output>    -->
       </td>
 
-      <td style="padding: 10px" class="center" width="25%">
+      <td style="padding: 10px; padding-bottom: 0px;" class="center" width="25%">
         <div class="d-grid gap-2 d-md-block" role="group" aria-label="Basic checkbox toggle button group">
           <div class="checks_group">
           <input type="checkbox" class="btn-check" name="Entire home/apt" id="Entire home/apt" autocomplete="off" value="Entire home/apt">
@@ -56,7 +57,7 @@ Find the perfect Airbnb
         
       </td>
 
-    <td style="padding: 10px" class="center" width="25%">
+    <td style="padding: 10px; padding-bottom: 0px;" class="center" width="25%">
       <select class="form-select" aria-label=".form-select example" name="accommodates">
         <option selected value="1">Number of guests</option>
         {% for i in num_of_acc %}
@@ -64,9 +65,9 @@ Find the perfect Airbnb
         {% endfor %}
       </select>
     </td>
-    <td style="padding: 10px" class="center" width="25%">
+    <td style="padding: 10px; padding-bottom: 0px;" class="center" width="25%">
       <select class="form-select" aria-label=".form-select example" name="facility" style="max-width: 200px">
-        <option selected value="1">Facility</option>
+        <option selected value="None">Facility</option>
         <option value="Museums and galleries" disabled>Museums and galleries</b></option>
         {% for each in art %}
         <option value="{{ each.pk }} MUSEUM" style="text-align:left">{{ each.name }}</option>
@@ -79,7 +80,25 @@ Find the perfect Airbnb
       </select>
     </td>
 
+  </tr>
+      <tr>
+        <td></td><td></td><td></td>
+        <td class="center" width="25%">
+          <div class="center" style="margin-top:-0.7em; padding-top: 0px;">
+          Distance: 
+        </div>
+          <input type="radio" class="btn-check" name="max_distance" id="walkable" autocomplete="off" value="500" checked>
+          <label class="btn btn-outline-secondary btn-sm" for="walkable" >walkable</label>
+        
+          <input type="radio" class="btn-check" name="max_distance" id="cyclable" autocomplete="off" value="3000">
+          <label class="btn btn-outline-secondary btn-sm" for="cyclable">cyclable</label>
+    
+    </td>
     </tr>
+
+      
+
+
     <tr>
       <td colspan="5" class="center"  style="padding: 25px"><button class="btn btn-primary btn-lg" type="submit" name="action" >Search</button></td>
     </tr>

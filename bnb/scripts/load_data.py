@@ -1,58 +1,88 @@
-# import openpyxl
+'''Very ugly and lengthy code to complete and finish all models.
+Command needed: python manage.py runscript load_data
+Please don't read or use xx
+Layla Hoogeveen, Information Organization, October 2021
+'''
+
+import openpyxl
 import requests
-# from pathlib import Path
+from pathlib import Path
 import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
-from bnbs.models import Accommodation
-# import os
-# import sys
+from bnbs.models import Restaurant, ShoppingArea, Art, Accommodation
+import os
+import sys
 import re
 
+
+# def run():
+#    '''For removing duplicates'''
+#     i = 0
+#     print("ACCommodations", len(Accommodation.objects.all()))
+#     object_count = len(Accommodation.objects.all())
+#     for row in Accommodation.objects.all():
+#         if Accommodation.objects.filter(room_id=row.room_id).count() > 1:
+#             i = i + 1
+#             # print (row)
+#             row.delete()
+#             if i % 100 == 0:
+#                 print (i, "verwijderd")
+
+
+#     print ("Totaal verwijderd:", i, "van de", object_count)
+    
+#     print("ACCommodations after deleting", len(Accommodation.objects.all()))
+
 def run():
-    accs = Accommodation.objects.filter(pk__gt=404).all()
-    # listje = []
+    '''Remove accommodations with invalid urls by scraping'''
+
+    num_accs_before = len(Accommodation.objects.all())
+    print (num_accs_before)
+    accs = Accommodation.objects.filter(pk__gt=0).all()
+
     total = 0
     i = 0
     options = Options()
     options.headless = True
+    options.add_argument("--log-level=3")
+
     driver = webdriver.Chrome(executable_path=r'C:/Users/Layla/.wdm/drivers/chromedriver/win32/94.0.4606.61/chromedriver.exe', options=options)
-    
     for a in accs:
         total = total + 1
+
         
         URL = a.listing_url
         if check_url(URL, driver) == True:
             i=i+1
-            print (i, "van de", total)
+            print ("\n", i, "van de", total, "\n\n")
             a.delete()
-            # listje.append(a.pk)
-        if i > 1000:
+        if total > 200:
             break
+        if total % 50 == 0:
+            print (total)
         
-    print ('\n')
-    print ('\n')
-    print ('\n')
-    print ("Final")
-    print ('\n')
-    print (i, "van de", total, "verwijderd")
+
+    print ("\n\n", "Final", "\n")
+    print (i, "van de", total, "verwijderd", "\n")
+    print ("Accommodations before running script:", num_accs_before, "\n")
+    print ("Accommodations after running script:", len(Accommodation.objects.all()))
     driver.quit()
-    
-    # print (len(listje))
-    # print (listje)
+
 
 def check_url(url, driver):
+    '''Check whether url is invalid by searching for error message'''
+
     page = requests.get(url)
     driver.get(url)
     time.sleep(5)
     res=driver.page_source
-    # driver.quit()
     soup = BeautifulSoup(res, "html.parser")
 
+    # Not the fastest, but the only way to find this specific text
     soup = str(soup)
-    # driver.close()
     if "Permission denied by Himeji" in soup:
         return True
     
@@ -97,12 +127,15 @@ def check_url(url, driver):
 
 # ROOM_TYPE_CHOICES = ['Entire home/apt', 'Hotel room', 'Private room', 'Shared room']
 
-# xlsx_file = Path('data\curated_data', 'shop_clean.xlsx')
+# xlsx_file = Path('data\curated_data', 'art_clean.xlsx')
 # wb_obj = openpyxl.load_workbook(xlsx_file)
 # sheet = wb_obj.active
 
+
 # Shop
 # def run():
+#     '''Provide model ShoppingArea with data from Excel sheet'''
+
 #     for row in sheet.iter_rows():
         
 #         nm = row[0].value
@@ -113,6 +146,8 @@ def check_url(url, driver):
 #         add.save()
 # Art
 # def run():
+#     '''Provide model Art with data from Excel sheet'''
+
 #     i = 0
 #     for row in sheet.iter_rows():
 #         i = i + 1
@@ -146,6 +181,8 @@ def check_url(url, driver):
 
 # Restaurants
 # def run():
+#     '''Provide model Restaurant with data from Excel sheet'''
+
 #     i = 0
 #     for row in sheet.iter_rows():
 #         i = i + 1
@@ -173,6 +210,8 @@ def check_url(url, driver):
 
 # Accommodations
 # def run():
+#     '''Provide model Accommdation with data from Excel sheet'''
+
 #     i = 0
 #     for row in sheet.iter_rows():
 #         i = i + 1
@@ -200,13 +239,15 @@ def check_url(url, driver):
 #         lsturl = row[18].value
 #         pic = row[19].value
 
-#         add = Accommodation.objects.create(room_id = id, name = nm, review = rvw,
-#                                             description = dscr, neighbourhood = nbh,
-#                                             latitude = lat, longitude = long,
-#                                             property_long = prop_type, property = prop,
-#                                             room_type = room, accommodates = accs,
-#                                             bedrooms = brooms, beds = bds,
-#                                             number_of_baths = baths, bathroom_shared = bthsh,
-#                                             amenities = am, price_eu = pr_eu, price_us = pr_us,
-#                                             listing_url = lsturl, picture_url = pic)
-#         add.save()
+
+#         if nm is not None and len(nm) > 4:
+#             add = Accommodation.objects.create(room_id = id, name = nm, review = rvw,
+#                                                 description = dscr, neighbourhood = nbh,
+#                                                 latitude = lat, longitude = long,
+#                                                 property_long = prop_type, property = prop,
+#                                                 room_type = room, accommodates = accs,
+#                                                 bedrooms = brooms, beds = bds,
+#                                                 number_of_baths = baths, bathroom_shared = bthsh,
+#                                                 amenities = am, price_eu = pr_eu, price_us = pr_us,
+#                                                 listing_url = lsturl, picture_url = pic)
+#             add.save()
