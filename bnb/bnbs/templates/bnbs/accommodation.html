@@ -1,0 +1,145 @@
+<!-- Layla Hoogeveen,
+    Information Organization, October 2021 -->
+
+{% extends "layout_accommodation.html" %}
+
+{% block title %}
+    AirBnBest: {{ bnb.name }}
+{% endblock %}
+
+{% block header %}
+<b><h3>{{ bnb.name }}</h3>
+€ {{ bnb.price_eu }} per night</b>
+{% endblock %}
+
+{% block info %}
+<table style="table-layout: auto;">
+    <tr>
+        <td>
+            <h3 style="text-align: left">Info</h3>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="result_title">
+            Neighbourhood:
+        </td>
+        <td class="result_properties">
+            {{ bnb.neighbourhood }}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="result_title">
+            Property type:
+        </td>
+        <td class="result_properties">
+            {{ bnb.property_long }}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="result_title">
+            Accommodates
+        </td>
+        <td class="result_properties">
+            {{ bnb.accommodates }} guests
+        </td>
+    </tr>
+
+    <tr>
+        <td class="result_title">
+            Bedrooms:
+        </td>
+        <td class="result_properties">
+            {{ bnb.bedrooms }}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="result_title">
+            Beds:
+        </td>
+        <td class="result_properties">
+            {{ bnb.beds }}
+        </td>
+    </tr>
+
+    <tr>
+        <td class="result_title">
+            Baths:
+        </td>
+        <td class="result_properties">
+            {{ bnb.beds }} 
+            {% if bnb.bathroom_shared == True %}
+                (shared)
+            {% else %}
+                (private)
+            {% endif %}
+            
+        </td>
+    </tr>
+
+    <tr>
+        <td class="result_title">
+            Average review score:
+        </td>
+        <td class="result_properties">
+            {{ bnb.review }}
+        </td>
+    </tr>
+    {% if restaurants|length > 0 %}
+    <tr>
+        
+        <td class="result_title" style="vertical-align: top;">
+            Restaurants nearby:
+        </td>
+        <td class="result_properties">
+            {% for r in restaurants %}
+            <a href='{{ r.url }}'>{{ r.name }}<br></a>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endif %}
+    <tr>
+        <td colspan=2 class="center" style="padding: 1em">
+            <a href='{{ bnb.listing_url }}'>
+            <button class="btn btn-primary btn" type="submit" name="action" >View airbnb listing</button>
+            </a>
+        </td>
+    </tr>
+
+</table>
+{% endblock %}
+
+{% block body %}
+<table class="center">
+    <tr>
+        <td>
+            <a href='{{ bnb.listing_url }}'>
+                <img src="{{ bnb.picture_url }}" class="bnb_image" style= "max-width: 40em; max-height: 40em">
+            </a>
+            
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="bnb_descr" style="text-align: left; padding: 1em;  width: 40em; display: inline-block; ">
+            <h3>Description</h3>
+            {% autoescape off %}
+                {{ bnb.description }}
+            {% endautoescape %}
+        </div>
+        </td>
+
+    </tr>
+</table>
+
+{% endblock %}
+
+{% block amenities %}
+    {% for a in amenities %}
+        {{ a }}<br>
+    {% endfor %}
+{% endblock %}

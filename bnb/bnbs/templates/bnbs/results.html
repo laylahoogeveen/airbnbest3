@@ -1,8 +1,6 @@
-<!-- Layla Hoogeveen,
-    Information Organization, October 2021 -->
+<!-- Information Organization, October 2021 -->
 
 {% extends "layout.html" %}
-{% load mathfilters %}
 
 {% block title %}
     AirBnBest
@@ -20,7 +18,7 @@
     <table style="table-layout: auto;">
         <tr>
             <td>
-                <h2>Filters</h2>
+                <h3 style="text-align: left">Filters</h3>
             </td>
         </tr>
         <!-- Filters selected on homepage -->
@@ -96,6 +94,7 @@
                     {% else %}
                     <option selected value="None">Facility</option>
                     {% endif %}
+                    <option value="None">Facility</option>
                     <option value="Museums and galleries" disabled>Museums and galleries</b></option>
                     {% for each in art %}
                     <option value="{{ each.pk }} MUSEUM" style="text-align:left">{{ each.name }}</option>
@@ -108,19 +107,66 @@
                   </select>
 
             </td>
-        </tr> 
+        </tr>
         <tr>
             <td class="result_title">
-                within
+                
             </td>
             <td class="result_properties">
-                <input class="form-control form-control-sm" type="number" name="max_distance" step="100" value="{{ fac_distance }}" placeholder="{{ fac_distance }}">
+                within
+                <input class="form-control form-control-sm" type="number" name="fac_distance" step="100" value="{{ fac_distance }}" placeholder="{{ fac_distance }}" style="margin: 0.3em">
+                meters
+            </td>
+
+        </tr> 
+        <tr>
+            <td class="result_title" style="display: inline-block;">With </td>
+            <td class="results_properties">
+                <div class="d-grid gap-2 d-md-block" role="group" aria-label="Basic checkbox toggle button group">
+                    <div class="checks_group">
+                        {% if 'Museum/gallery' in facs_near %}
+                            <input type="checkbox" class="btn-check" name="Museum/gallery" id="Museum/gallery" autocomplete="off" value="Museum/gallery" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="Museum/gallery" style="font-size: 0.85em">Museum/gallery</label>
+                        {% else %}
+                            <input type="checkbox" class="btn-check" name="Museum/gallery" id="Museum/gallery" autocomplete="off" value="Museum/gallery">
+                            <label class="btn btn-outline-secondary btn-sm" for="Museum/gallery" style="font-size: 0.85em">Museum/gallery</label>                       
+                        {% endif %}
+
+                        {% if 'Restaurant' in facs_near %}
+                            <input type="checkbox" class="btn-check" name="Restaurant" id="Restaurant" autocomplete="off" value="Restaurant" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="Restaurant" style="font-size: 0.85em">Restaurant</label>
+                        {% else %}
+                            <input type="checkbox" class="btn-check" name="Restaurant" id="Restaurant" autocomplete="off" value="Restaurant">
+                            <label class="btn btn-outline-secondary btn-sm" for="Restaurant" style="font-size: 0.85em">Restaurant</label>     
+                        {% endif %}              
+                    </div>
+                    
+                    <div class="checks_group">
+                        {% if 'Shopping area' in facs_near %}
+                            <input type="checkbox" class="btn-check" name="Shopping area" id="Shopping area" autocomplete="off" value="Shopping area" checked>
+                            <label class="btn btn-outline-secondary btn-sm" for="Shopping area" style="font-size: 0.85em">Shopping area</label>
+                        {% else %}
+                            <input type="checkbox" class="btn-check" name="Shopping area" id="Shopping area" autocomplete="off" value="Shopping area">
+                            <label class="btn btn-outline-secondary btn-sm" for="Shopping area" style="font-size: 0.85em">Shopping area</label>
+                        {% endif %}
+                 
+                    </div>
+                  </div>
+            </td>
+
+        </tr>
+        <tr>
+            <td class="result_title">
+                
+            </td>
+            <td class="result_properties">
+                within
+                <input class="form-control form-control-sm" type="number" name="all_fac_distance" step="100" value="{{ all_fac_distance }}" placeholder="{{ all_fac_distance }}" style="margin: 0.3em">
                 meters
             </td>
 
         </tr> 
 
-        <!-- New filters -->
         <tr>
             <td class="result_title">
                 Neighbourhood:
@@ -132,6 +178,7 @@
                     {% else %}
                         <option selected value="None">Neighbourhood</option>
                     {% endif %}
+                    <option value="None">Neighbourhood</option>
                     {% for each in neighbourhoods %}
                         <option value="{{ each.neighbourhood }}" style="text-align:left">{{ each.neighbourhood }}</option>
                     {% endfor %}
@@ -139,6 +186,7 @@
 
             </td>
         </tr>
+
         <tr>
             <td colspan="2" rowspan="2" style="padding: 1.5em" class="center"><button class="btn btn-primary btn" type="submit" name="action" style="width:80%">Search</button></td>
         </tr>
@@ -153,8 +201,8 @@
         <tr>
         {% for result in results %}
         <td class="cell">
-            <p><a href='/bnb/{{ result.room_id }}'>
-            <img src={{ result.picture_url }} class="result_img">
+            <p><a href='/{{ result.room_id }}'>
+            <img src="{{ result.picture_url }}" class="result_img">
             </p>
             <Center>
             <span class="descr">

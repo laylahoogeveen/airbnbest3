@@ -1,0 +1,319 @@
+/* colors */
+$background-color: #fffcff;
+$text: #3B3333;
+$accent-1: #74AD84;
+$accent-2: #AD8686;
+$accent-3: #756363;
+$light-1: #e3ffeb;
+$light-2: #f7eded;
+$dark-1: #05240d;
+
+/* checkboxes */
+$form-check-label-color: $accent-2;
+$form-check-input-border: none;
+$form-check-input-focus-border: none;
+$form-check-input-bg: $accent-2;
+$form-check-input-checked-color: $accent-1;
+$form-check-input-focus-box-shadow: none;
+$btn-border-radius: 0;
+$btn-border-width: 0;
+
+
+/* sizes */
+$small: 600px;
+
+body {
+    height: 100%;
+    color: $text;
+    background-color: $background-color;
+    background-image: url(../images/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-attachment: fixed;
+    overflow-x: hidden;
+    font-size: 0.9em;
+    font-family: "Karla", "Arial", "Lucida Sans Unicode", sans-serif;
+    @media screen and (max-width: $small) {
+      background-color: $background-color;;
+    }
+}
+  
+.resize {
+    height: 70%;
+    width: 70%;
+  @media screen and (max-width: $small) {
+      width: 50%;
+      height: 50%;
+    }
+}
+  
+a {
+    color: $text;
+    text-decoration: none;
+    &:hover {
+        color: $accent-1;
+        text-decoration: none;
+    }
+    &:active {
+        color: $accent-2;
+        text-decoration: none;
+    }
+}
+  
+.center {
+    text-align: center;
+}
+  
+input[type=text] {
+    width: 200px;
+    transition: ease-in-out, width 0.35s ease-in-out;
+    background-color: transparent;
+    color: $text;
+    border: 1px solid $text;
+    &:focus {
+        width: 300px;
+    }
+}
+  
+input[type=submit] {
+    background-color: $light-1;
+    padding: 3px 5.5em;
+    border: none;
+    cursor: pointer;
+    &:hover {
+        background-color: $accent-2;
+    }
+}
+  
+.nav-link {
+    color: $accent-2;
+}
+
+.navbar {
+    font-size: 1.5em;
+    text-align: right;
+    font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: $dark-1;
+    text-align: center;
+    @media screen and (max-width: $small) {
+        font-size: 1em;
+    }
+}
+
+h3 {
+    @extend .navbar;
+}
+  
+.form-control-sm {
+    border: none;
+    background-color: $light-2;
+    text-align: center;
+    color: $accent-3;
+    display: inline-block;
+}
+.form-control {
+  display: inline-block;
+}
+
+.form-select {
+  border: none;
+  width: auto;
+  background-color: $light-2;
+  display: inline-block;
+  text-align: center;
+  color: $accent-3;
+  &:hover, &:active, &:focus {
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+  }
+}
+
+.range {
+  width: fit-content;
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    color: $accent-1;
+    width: 100%;
+    height: 7px; /* Specified height */
+    background: $accent-1;
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    &:hover {
+        color: $accent-1;
+        opacity: 0.9; /* Fully shown on mouse-over */
+        text-decoration: none;
+    }
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        opacity: 1;
+        width: 20px; /* Set a specific slider handle width */
+        height: 20px; /* Slider handle height */
+        border-radius: 50%;
+        background: $accent-1; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+    &::-moz-range-thumb {
+        width: 20px; /* Set a specific slider handle width */
+        height: 20px; /* Slider handle height */
+        border-radius: 50%;
+        opacity: 1;
+        background: $accent-1; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+}
+
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    color: $accent-1;
+    width: 100%;
+    height: 7px; /* Specified height */
+    background: $accent-1;
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    &:hover {
+        color: $accent-1;
+        opacity: 0.9; /* Fully shown on mouse-over */
+        text-decoration: none;
+    }
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        opacity: 1;
+        width: 20px; /* Set a specific slider handle width */
+        height: 20px; /* Slider handle height */
+        border-radius: 50%;
+        background: $accent-1; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+    &::-moz-range-thumb {
+        width: 20px; /* Set a specific slider handle width */
+        height: 20px; /* Slider handle height */
+        border-radius: 50%;
+        opacity: 1;
+        background: $accent-1; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+}
+.slider2 {
+  @extend .slider;
+  height: 0px;
+  margin-top:-10px;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-align: center;
+    font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $dark-1;
+}
+
+h2 {
+    font-size: 1 em;
+    font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $dark-1;
+}
+td.result_title {
+    font-weight: bold;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
+.result_properties {
+    margin-top: 0.2em;
+    padding-top: 0.2em;
+    margin-bottom: 0.2em;
+    padding-bottom: 0.2em;
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
+.result_properties .form-control-sm {
+    width: 35%;
+}
+  
+.btn {
+    background-color: $accent-2;
+    border: none;
+    &:visited {
+        @extend .btn;
+    }
+    &:hover, &:active, &:focus, &:checked {
+        background-color: $accent-3;
+        background-color: $accent-3;
+        outline:0px !important;
+        -webkit-appearance:none;
+        box-shadow: none !important;
+    }
+}
+
+.btn-lg {
+  width: 30%;
+}
+
+.btn-sm {
+  background-color: $accent-2;
+  border: none;
+  color: $background-color; 
+  margin: 3px;
+  &:visited {
+    background-color: $accent-1;
+  }
+  &:hover, &:active, &:focus, &:checked {
+      background-color: $accent-3;
+      background-color: $accent-3;
+  }
+}
+
+.checks_group {
+    margin: 3px;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.cell {
+  width: 300px;
+  height: 220px;
+  text-align: center;
+}
+
+.result_img {
+  width: 220px;
+  height: 150px;
+  display: inline-block;
+  border-radius: 8px;
+}
+
+.descr { 
+  text-decoration: none; 
+  text-overflow: ellipsis; 
+  display: block; 
+  overflow: hidden; 
+  white-space: nowrap;
+  width: 250px; 
+  height: 19px;
+}
+

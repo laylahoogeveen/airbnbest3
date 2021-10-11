@@ -49,14 +49,14 @@ body {
 }
   
 a {
-    color: $text;
+    color: $accent-1;
     text-decoration: none;
     &:hover {
         color: $accent-1;
         text-decoration: none;
     }
     &:active {
-        color: $accent-2;
+        color: $accent-3;
         text-decoration: none;
     }
 }
@@ -95,16 +95,20 @@ input[type=submit] {
     text-align: right;
     font-family: "Muli", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.10em;
     color: $dark-1;
     text-align: center;
     @media screen and (max-width: $small) {
         font-size: 1em;
     }
-}
-
-h3 {
-    @extend .navbar;
+    &:hover {
+        color: $accent-1;
+        text-decoration: none;
+    }
+    &:active {
+        color: $accent-3;
+        text-decoration: none;
+    }
 }
   
 .form-control-sm {
@@ -207,11 +211,6 @@ h3 {
         cursor: pointer; /* Cursor on hover */
     }
 }
-.slider2 {
-  @extend .slider;
-  height: 0px;
-  margin-top:-10px;
-}
 
 h1 {
     font-size: 2.5em;
@@ -229,6 +228,15 @@ h2 {
     letter-spacing: 0.05em;
     color: $dark-1;
 }
+
+h3 {
+    @extend h2;
+    font-size: 0.8 em;
+    letter-spacing: 0.02em;
+    color: $dark-1;
+    text-align: left;
+}
+
 td.result_title {
     font-weight: bold;
     margin-top: 0.2em;
@@ -307,6 +315,14 @@ table {
   border-radius: 8px;
 }
 
+.bnb_image {
+    max-width: 100%;
+    max-height: 100%; 
+    text-align: center;
+    display: inline-block;
+    border-radius: 8px;
+}
+
 .descr { 
   text-decoration: none; 
   text-overflow: ellipsis; 
@@ -317,3 +333,7 @@ table {
   height: 19px;
 }
 
+.bnb_descr { 
+    padding: 0.5em;
+    margin: 1em;
+}

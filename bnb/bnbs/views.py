@@ -7,7 +7,7 @@ from itertools import chain
 from haversine import haversine as hs
 from django.db.models import Min
 # from django.contrib.auth.decorators import login_required
-from .models import Accommodation, Art, ShoppingArea
+from .models import Accommodation, Art, ShoppingArea, Restaurant
 
 def index(request):
     """Return index page"""
@@ -86,6 +86,8 @@ def results(request):
             "neighbourhoods": Accommodation.objects.values('neighbourhood').distinct(),
             "neighbourhood": "None",
             "property_types": "None",
+            "facs_near": [],
+            "all_fac_distance": 500,
             "all_property_types": Accommodation.objects.values('property').distinct(),
             }
 
@@ -103,7 +105,16 @@ def more_filters(request):
         private_room  = request.GET.get("Private room")
         hotel_room = request.GET.get("Hotel room")
         shared_room = request.GET.get("Shared room")
-        fac_distance = int(request.GET.get("max_distance"))
+        fac_distance = int(request.GET.get("fac_distance"))
+
+        shopping_area = request.GET.get("Shopping area")
+        museum = request.GET.get("Museum/gallery")
+        restaurant = request.GET.get("Restaurant")
+        all_fac_distance = int(request.GET.get("all_fac_distance"))
+
+        facs_near = [shopping_area, museum, restaurant]
+        facs = [i for i in facs_near if i != None]
+
         nbh = request.GET.get("neighbourhood")
         room_types = [entire_home, private_room, hotel_room, shared_room]
          
@@ -123,22 +134,26 @@ def more_filters(request):
         if nbh != "None":
             accs = accs.filter(neighbourhood=nbh)
 
-        facility_type = "None"
-
         # If facility is selected, find out which of the two kinds
         if facility != "None":
             if 'MUSEUM' in facility:
-                facility = facility.strip(" MUSEUM")
+                facility = int(facility.strip(" MUSEUM"))
                 facility = Art.objects.get(pk=facility)
                 facility_type = "MUSEUM"
             elif 'SHOP' in facility:
-                facility = facility.strip(" SHOP")
+                facility = int(facility.strip(" SHOP"))
                 facility = ShoppingArea.objects.get(pk=facility)
                 facility_type = "SHOP"
             
             bnbs = bnb_near_facility(facility, fac_distance)
             
             accs =  accs.filter(pk__in=bnbs)
+            # facility_type = "None"
+        
+        if facs_near != []:
+            bnbs = bnb_near_fac_category(facs_near, all_fac_distance, accs)
+            accs =  accs.filter(pk__in=bnbs)
+
 
         context = {
             "results": accs,
@@ -153,10 +168,74 @@ def more_filters(request):
             "shop": shop,
             "neighbourhoods": Accommodation.objects.values('neighbourhood').distinct(),
             "neighbourhood": nbh,
+            "facs_near": facs_near,
+            "all_fac_distance": all_fac_distance,
             }
 
     return render(request, "bnbs/results.html", context)
 
+def accommodation(request, room_id):
+    '''Return accommodation accessed through dynamic url'''
+
+    accommodation = Accommodation.objects.filter(room_id=room_id).first()
+    restaurants = []
+    for r in Restaurant.objects.all():
+        if calculate_distance(r, accommodation) <= 500:
+            restaurants.append(r)
+
+    context = {
+            "bnb": accommodation,
+            "amenities": accommodation.amenities.strip('["]').split('", "'),
+            "restaurants": restaurants
+        }
+
+    return render(request, "bnbs/accommodation.html", context)
+
+def bnb_near_fac_category(facilities, max_distance, accs):
+    bnbs = []
+    bnb_pks = []
+    for a in accs:
+        id = a['room_id']
+        acc = Accommodation.objects.get(room_id=id)
+        bnbs.append(acc)
+        bnb_pks.append(acc.pk)
+    
+    shop_results = []
+    art_results = []
+    rest_results = []
+
+    if "Shopping area" in facilities:
+        for bnb in bnbs:
+            if bnb.latitude != None:
+                for shop in ShoppingArea.objects.all():
+                    if calculate_distance(bnb, shop) <= max_distance:
+                        shop_results.append(bnb.pk)
+    else:
+        shop_results = bnb_pks
+
+    if "Museum/gallery" in facilities:
+        for bnb in bnbs:
+            if bnb.latitude != None:
+                for art in Art.objects.all():
+                    if calculate_distance(bnb, art) <= max_distance:
+                        art_results.append(bnb.pk)
+    else:
+        art_results = bnb_pks
+
+    if "Restaurant" in facilities:
+        for bnb in bnbs:
+            if bnb.latitude != None:
+                for rest in Restaurant.objects.all():
+                    if calculate_distance(bnb, rest) <= max_distance:
+                        rest_results.append(bnb.pk)
+    else:
+        rest_results = bnb_pks
+
+
+    results = set(shop_results).intersection(art_results, rest_results)
+    print (results)
+
+    return results
 
 def bnb_near_facility(facility, max_distance):
     '''Find bnbs in near chosen facility within range max_distance'''
@@ -171,7 +250,6 @@ def bnb_near_facility(facility, max_distance):
 
     return results
 
-
 def calculate_distance(bnb, facility):
     '''Calculate distance between two objects'''
 
@@ -182,14 +260,3 @@ def calculate_distance(bnb, facility):
 
 
 
-
-def accommodation(request, room_id):
-    '''Return accommodation accessed through dynamic url'''
-
-    accommodation = Accommodation.objects.filter(room_id=room_id).first()
-
-    context = {
-            "bnb": accommodation,
-        }
-
-    return render(request, "bnbs/bnb.html", context)

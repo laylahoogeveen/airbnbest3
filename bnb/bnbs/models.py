@@ -23,6 +23,7 @@ class Accommodation(models.Model):
     price_us = models.IntegerField(default=0, null=True)
     listing_url = models.URLField(max_length=80, null=True)
     picture_url = models.URLField(max_length=200, null=True)
+    # price_rater = models.IntegerField(default=0, null=True)
 
     def __str__(self):
         return (str(self.room_id) + str(self.name))
