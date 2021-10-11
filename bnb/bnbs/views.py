@@ -14,7 +14,6 @@ def index(request):
 
     art = Art.objects.all()
     shop = ShoppingArea.objects.all()
-    # print (len(Accommodation.objects.all()))
 
     context = {
     "room_types": Accommodation.objects.order_by().values('room_type').distinct(),
@@ -111,6 +110,7 @@ def more_filters(request):
         museum = request.GET.get("Museum/gallery")
         restaurant = request.GET.get("Restaurant")
         all_fac_distance = int(request.GET.get("all_fac_distance"))
+        property_types = request.GET.get("property_types")
 
         facs_near = [shopping_area, museum, restaurant]
         facs = [i for i in facs_near if i != None]
@@ -133,6 +133,9 @@ def more_filters(request):
 
         if nbh != "None":
             accs = accs.filter(neighbourhood=nbh)
+        
+        if property_types != "None":
+            accs = accs.filter(property=property_types)
 
         # If facility is selected, find out which of the two kinds
         if facility != "None":
@@ -148,11 +151,13 @@ def more_filters(request):
             bnbs = bnb_near_facility(facility, fac_distance)
             
             accs =  accs.filter(pk__in=bnbs)
-            # facility_type = "None"
+        else:
+            facility_type = None
         
         if facs_near != []:
             bnbs = bnb_near_fac_category(facs_near, all_fac_distance, accs)
             accs =  accs.filter(pk__in=bnbs)
+        
 
 
         context = {
@@ -169,7 +174,10 @@ def more_filters(request):
             "neighbourhoods": Accommodation.objects.values('neighbourhood').distinct(),
             "neighbourhood": nbh,
             "facs_near": facs_near,
+            "property_types": property_types,
             "all_fac_distance": all_fac_distance,
+            "property": property,
+            "all_property_types": Accommodation.objects.values('property').distinct(),
             }
 
     return render(request, "bnbs/results.html", context)
@@ -231,9 +239,7 @@ def bnb_near_fac_category(facilities, max_distance, accs):
     else:
         rest_results = bnb_pks
 
-
     results = set(shop_results).intersection(art_results, rest_results)
-    print (results)
 
     return results
 

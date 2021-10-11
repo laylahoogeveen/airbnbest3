@@ -77,6 +77,25 @@
         </tr>
         <tr>
             <td class="result_title">
+                With
+            </td>
+            <td class="result_properties">
+                <select class="form-select" aria-label=".form-select example" name="property_types" style="max-width: 200px">
+                    {% if property_types != "None" %}
+                    <option selected value="{{ property_types }}">{{ property_types }}</option>
+                    {% else %}
+                    <option selected value="None">Property types</option>
+                    {% endif %}
+                    <option value="None">Property type</option>
+                    {% for each in all_property_types %}
+                        <option value="{{ each.property }}" style="text-align:left">{{ each.property }}</option>
+                    {% endfor %}
+                  </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="result_title">
                 Accommodates
             </td>
             <td class="result_properties">
@@ -174,11 +193,12 @@
             <td class="result_properties">
                 <select class="form-select" aria-label=".form-select example" name="neighbourhood" style="max-width: 200px">
                     {% if neighbourhood != "None" %}
+                        <option value="None">Neighbourhood</option>
                         <option selected value="{{ neighbourhood }}">{{ neighbourhood }}</option>
                     {% else %}
                         <option selected value="None">Neighbourhood</option>
                     {% endif %}
-                    <option value="None">Neighbourhood</option>
+    
                     {% for each in neighbourhoods %}
                         <option value="{{ each.neighbourhood }}" style="text-align:left">{{ each.neighbourhood }}</option>
                     {% endfor %}
